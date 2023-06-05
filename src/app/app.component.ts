@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +10,9 @@ export class AppComponent {
   displayText = '';
   currentText = '';
   title = 'mycalc';
+
+  constructor(private changeDetectorRef: ChangeDetectorRef) {
+  }
 
   displayInputText(value: string) {
     this.currentText = this.currentText + value;
@@ -43,7 +46,11 @@ export class AppComponent {
   }
 
   clearLast() {
-    this.currentText = this.currentText.slice(0, -1)
-    this.displayText = this.currentText;
+    if (this.currentText.length > 0) {
+      this.changeDetectorRef.detectChanges();
+      const value = this.currentText.substring(0, this.currentText.length - 1);
+      this.displayText = value;
+      this.currentText = value;
+    }
   }
 }
