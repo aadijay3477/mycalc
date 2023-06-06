@@ -32,11 +32,13 @@ export class AppComponent {
       }
     } catch (error) {
       alert('Error: ' + error + '\nclearing and setting to zero');
-      value = '0'
+      value = '0';
     }
-    //to remove the leading zeroes from each value before evaluating the
+
+    // Remove leading zeroes before evaluating the expression
     value = value.replace(/(^|\D)0+(\d)/g, '$1$2');
-    this.currentText = eval(value);
+
+    this.currentText = eval(value).toString();
     this.displayText = this.currentText;
   }
 
@@ -47,7 +49,6 @@ export class AppComponent {
 
   clearLast() {
     if (this.currentText.length > 0) {
-      this.changeDetectorRef.detectChanges();
       const value = this.currentText.substring(0, this.currentText.length - 1);
       this.displayText = value;
       this.currentText = value;
